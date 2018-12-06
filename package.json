@@ -4,9 +4,16 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "rm -rf ./dist/ && mkdir ./dist/ && cp -R ./src/* ./dist/ && babel ./dist/index.js --presets minify --out-file ./dist/index.js && babel ./dist/service-worker.js --presets minify --out-file ./dist/service-worker.js && inliner --noimages --skip-absolute-urls ./dist/index.html > ./dist/index.dist.html && rm -rf ./dist/index.html && mv ./dist/index.dist.html ./dist/index.html && rm -rf ./dist/*.css && rm -rf ./dist/index.js"
+    "clean": "rm -rf ./dist/ && mkdir ./dist/",
+    "copy": "cp -R ./src/* ./dist/",
+    "build:js": "yarn google-closure-compiler --js=./src/index.js --js_output_file=./dist/index.js --compilation_level=ADVANCED --jscomp_off=checkVars --language_out=ECMASCRIPT_2017",
+    "build:sw": "yarn google-closure-compiler --js=./src/service-worker.js --js_output_file=./dist/service-worker.js --compilation_level=ADVANCED --jscomp_off=checkVars --allow_method_call_decomposing --language_out=ECMASCRIPT_2017",
+    "build:inline": "inliner --noimages ./dist/index.html > ./dist/index.dist.html && rm -rf ./dist/index.html && mv ./dist/index.dist.html ./dist/index.html",
+    "build:smaller": "rm -rf ./dist/*.css && rm -rf ./dist/index.js",
+    "dist": "yarn clean && yarn copy && yarn build:js && yarn build:sw && yarn build:inline && yarn build:smaller"
   },
   "devDependencies": {
-    "babel-preset-minify": "^0.5.0"
+    "google-closure-compiler": "^20181125.0.1",
+    "inliner": "^1.13.1"
   }
 }
