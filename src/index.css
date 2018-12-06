@@ -1,0 +1,87 @@
+body {
+  background: radial-gradient(ellipse at center, #ffffff 0%,#d3d3d3 100%);
+  overflow: hidden;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+main > div {
+  width: 100%;
+  text-align: center;
+}
+
+#readout {
+  font-size: 12rem;
+  font-family: sans-serif;
+  line-height: 12rem;
+}
+
+button {
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+button:focus {
+  outline: none;
+}
+
+#show-mph {
+  border-radius: 10px 0px 0 10px;
+  margin-right: -6px;
+}
+
+#show-kmh {
+  border-radius: 0px 10px 10px 0px;
+}
+
+.selected {
+  background-color: hotpink;
+  color: #fff;
+}
+
+#start {
+  margin-top: 1rem;
+  background-color: hsl(114, 96%, 92%);
+}
+
+#start.selected {
+  background-color: hsl(0, 96%, 92%);
+  color: #000;
+}
+
+body.dark {
+  background: radial-gradient(ellipse at center, #1b1b1b 0%, #000000 100%);
+  color: #01a003;
+}
+
+body.dark button {
+  background-color: #2a2a2a;
+  border: 1px solid #01a003;
+  color: #01a003;
+}
+
+body.dark .selected {
+  background-color: #01a003;
+  color: #fff;
+}
+
+body.dark #start {
+  margin-top: 1rem;
+  background-color: hsl(114, 100%, 18%);
+}
+
+body.dark #start.selected {
+  background-color: hsl(0, 100%, 18%);
+  color: #fff;
+  border-color: hsl(15, 100%, 18%);
+}

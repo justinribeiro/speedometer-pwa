@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speedometer</title>
+  <meta name="description" content="Simple speedometer progressive web app based on Geolocation API.">
+  <meta name="theme-color" content="#f1f1f1">
+  <link rel="icon" href="/images/speedometer.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <main>
+    <div>
+      <div id="readout">000</div>
+    </div>
+    <div id="readoutUnits">
+      <button id="show-mph" class="selected">mi / h</button>
+      <button id="show-kmh">km / h</button>
+    </div>
+    <div>
+      <button id="start">🔑 Start</button>
+    </div>
+  </main>
+  <script src="index.js"></script>
+</body>
+</html>

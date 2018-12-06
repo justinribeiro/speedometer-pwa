@@ -1,0 +1,12 @@
+{
+  "name": "speedometer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "rm -rf ./dist/ && mkdir ./dist/ && cp -R ./src/* ./dist/ && babel ./dist/index.js --presets minify --out-file ./dist/index.js && babel ./dist/service-worker.js --presets minify --out-file ./dist/service-worker.js && inliner --noimages --skip-absolute-urls ./dist/index.html > ./dist/index.dist.html && rm -rf ./dist/index.html && mv ./dist/index.dist.html ./dist/index.html && rm -rf ./dist/*.css && rm -rf ./dist/index.js"
+  },
+  "devDependencies": {
+    "babel-preset-minify": "^0.5.0"
+  }
+}
