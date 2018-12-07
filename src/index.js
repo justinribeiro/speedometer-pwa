@@ -62,15 +62,14 @@ const startAmbientSensor = () => {
         if (result.state === 'denied') {
           return;
         }
-
-        const sensor = new AmbientLightSensor();
-        sensor.onreading = () => {
-          if (sensor.illuminance < 3 && !appOpts.dom.body.classList.contains('dark')) {
+        const sensor = new AmbientLightSensor({frequency: 0.25});
+        sensor.addEventListener('reading', () => {
+          if (sensor['illuminance'] < 3 && !appOpts.dom.body.classList.contains('dark')) {
             appOpts.dom.body.classList.toggle('dark');
-          } else if (sensor.illuminance > 3 && appOpts.dom.body.classList.contains('dark')) {
+          } else if (sensor['illuminance'] > 3 && appOpts.dom.body.classList.contains('dark')) {
             appOpts.dom.body.classList.toggle('dark');
           };
-        };
+        });
         sensor.start();
     });
   }
