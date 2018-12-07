@@ -1,5 +1,12 @@
 'use strict';
 
+/** @enum {number} */
+const readoutUnits = {
+  mph: 2.23694,
+  kmh: 3.6
+};
+
+/** @const */
 const appOpts = {
   dom: {
     body: document.querySelector('body'),
@@ -8,23 +15,19 @@ const appOpts = {
     showMph: document.querySelector('#show-mph'),
     showKmh: document.querySelector('#show-kmh'),
   },
-  readoutUnit: 'mph',
-  readoutUnits: {
-    mph: 2.23694,
-    kmh: 3.6
-  },
+  readoutUnit: readoutUnits.mph,
   watchId: null,
 };
 
 document.querySelector('#show-mph').addEventListener('click', (event) => {
-  appOpts.readoutUnit = 'mph';
+  appOpts.readoutUnit = readoutUnits.mph;
   if (!appOpts.dom.showMph.classList.contains('selected')) {
     toggleReadoutButtons();
   }
 });
 
 document.querySelector('#show-kmh').addEventListener('click', (event) => {
-  appOpts.readoutUnit = 'kmh';
+  appOpts.readoutUnit = readoutUnits.kmh;
   if (!appOpts.dom.showKmh.classList.contains('selected')) {
     toggleReadoutButtons();
   }
@@ -55,41 +58,33 @@ const toggleReadoutButtons = () => {
 const startAmbientSensor = () => {
   if ('AmbientLightSensor' in window) {
     navigator.permissions.query({ name: 'ambient-light-sensor' })
-    .then(result => {
-      if (result.state === 'denied') {
-        return;
-      }
+      .then(result => {
+        if (result.state === 'denied') {
+          return;
+        }
 
-      const sensor = new AmbientLightSensor();
-      sensor.onreading = () => {
-        if (sensor.illuminance < 3 && !appOpts.dom.body.classList.contains('dark')) {
-          appOpts.dom.body.classList.toggle('dark');
-        } else if (sensor.illuminance > 3 && appOpts.dom.body.classList.contains('dark')) {
-          appOpts.dom.body.classList.toggle('dark');
+        const sensor = new AmbientLightSensor();
+        sensor.onreading = () => {
+          if (sensor.illuminance < 3 && !appOpts.dom.body.classList.contains('dark')) {
+            appOpts.dom.body.classList.toggle('dark');
+          } else if (sensor.illuminance > 3 && appOpts.dom.body.classList.contains('dark')) {
+            appOpts.dom.body.classList.toggle('dark');
+          };
         };
-      };
-      sensor.start();
+        sensor.start();
     });
   }
 }
 
 const parsePosition = (position) => {
   appOpts.dom.readout.textContent = Math.round(
-    position.coords.speed * appOpts.readoutUnits[appOpts.readoutUnit]);
+    position.coords.speed * appOpts.readoutUnit);
 };
 
 const startServiceWorker = () => {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js', {
-      scope: './'
-    })
-    .then(registration => {
-      registration.addEventListener('updatefound',
-        () => {
-          console.log('service worker ready');
-        });
-    });
-  }
+  navigator.serviceWorker.register('service-worker.js', {
+    scope: './'
+  });
 }
 
 startAmbientSensor();

@@ -3,7 +3,7 @@ body {
   overflow: hidden;
 }
 
-main {
+body {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,7 +11,7 @@ main {
   flex-direction: column;
 }
 
-main > div {
+body > div {
   width: 100%;
   text-align: center;
 }

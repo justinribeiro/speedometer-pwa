@@ -1,4 +1,4 @@
-const version = 3;
+const version = 2018120701;
 const cachePrefix = 'speedometer-';
 const staticCacheName = `${cachePrefix}static-${version}`;
 const expectedCaches = [staticCacheName];
@@ -9,6 +9,7 @@ addEventListener('install', event => {
 
     await cache.addAll([
       './',
+      './images/speedometer.png'
     ]);
 
     self.skipWaiting();
