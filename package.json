@@ -1,19 +1,31 @@
 {
   "name": "speedometer",
+  "description": "Simple speedometer progressive web app based on Geolocation API and AmbientLightSensor API",
   "version": "1.0.0",
   "main": "index.js",
+  "author": "Justin Ribeiro <justin@justinribeiro.com>",
+  "bugs": {
+    "url": "https://github.com/justinribeiro/speedometer-pwa/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:justinribeiro/speedometer-pwa.git"
+  },
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf ./dist/ && mkdir ./dist/",
     "copy": "cp -R ./src/* ./dist/",
     "build:js": "yarn google-closure-compiler --js=./src/index.js --js_output_file=./dist/index.js --compilation_level=ADVANCED --jscomp_off=checkVars --language_out=ECMASCRIPT_2017",
     "build:sw": "yarn google-closure-compiler --js=./src/service-worker.js --js_output_file=./dist/service-worker.js --compilation_level=ADVANCED --jscomp_off=checkVars --allow_method_call_decomposing --language_out=ECMASCRIPT_2017",
-    "build:inline": "inliner --noimages ./dist/index.html > ./dist/index.dist.html && rm -rf ./dist/index.html && mv ./dist/index.dist.html ./dist/index.html",
+    "build:inline:css": "sed -i -e '/<link rel=\"stylesheet\" href=\"index.css\">/{' -e 'a <style>' -e 'r ./dist/index.css' -e 'a </style>' -e 'd}' ./dist/index.html",
+    "build:inline:js":  "sed -i -e '/<script src=\"index.js\"><\\/script>/{' -e 'a <script>' -e 'r ./dist/index.js' -e 'a </script>' -e 'd}' ./dist/index.html",
+    "build:minify": "yarn html-minifier --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --removeAttributeQuotes --remove-tag-whitespace --removeOptionalTags --minify-css true --output ./dist/index.html ./dist/index.html",
     "build:smaller": "rm -rf ./dist/*.css && rm -rf ./dist/index.js",
-    "dist": "yarn clean && yarn copy && yarn build:js && yarn build:sw && yarn build:inline && yarn build:smaller"
+    "dist": "yarn clean && yarn copy && yarn build:js && yarn build:sw && yarn build:inline:css && yarn build:inline:js && yarn build:minify && yarn build:smaller",
+    "dist:analytics": "yarn dist && cat ./analytics.txt >> ./dist/index.html"
   },
   "devDependencies": {
     "google-closure-compiler": "^20181125.0.1",
-    "inliner": "^1.13.1"
+    "html-minifier": "^3.5.21"
   }
 }
