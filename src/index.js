@@ -17,6 +17,7 @@ const appOpts = {
   },
   readoutUnit: readoutUnits.mph,
   watchId: null,
+  wakeLock: null
 };
 
 document.querySelector('#show-mph').addEventListener('click', (event) => {
@@ -36,6 +37,11 @@ document.querySelector('#show-kmh').addEventListener('click', (event) => {
 document.querySelector('#start').addEventListener('click', (event) => {
   if (appOpts.watchId) {
     navigator.geolocation.clearWatch(appOpts.watchId);
+
+    if (appOpts.wakeLock) {
+      appOpts.wakeLock.cancel();
+    }
+
     appOpts.watchId = null;
     appOpts.dom.start.textContent = '🔑 Start';
     appOpts.dom.start.classList.toggle('selected');
@@ -72,6 +78,16 @@ const startAmbientSensor = () => {
         });
         sensor.start();
     });
+  }
+}
+
+const startWakeLock = () => {
+  try {
+    navigator.getWakeLock("screen").then((wakeLock) => {
+      appOpts.wakeLock = wakeLock.createRequest();
+    });
+  } catch(error) {
+    // no experimental wake lock api build
   }
 }
 
