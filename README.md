@@ -1,5 +1,5 @@
 # speedometer-pwa
-A tiny no-frills speedometer progressive web app based on Geolocation API and AmbientLightSensor API.
+A tiny no-frills speedometer progressive web app based on Geolocation API, AmbientLightSensor API, and WakeLock API.
 
 ![test-drive-into-wall](https://user-images.githubusercontent.com/643503/49669717-0fbc7180-fa17-11e8-84a3-17c74c2d87a1.jpg)
 
@@ -16,6 +16,10 @@ The [GeoLocation API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocati
 I implemented [AmbientLightSensor API](https://developer.mozilla.org/en-US/docs/Web/API/AmbientLightSensor) to enable a dark mode while driving at night. To get this working in Chrome on Android you have to enable Generic Sensor extra classes, which is behind a flag: chrome://flags#enable-generic-sensor-extra-classes
 
 ![20181207-day-night-mode](https://user-images.githubusercontent.com/643503/49672919-8c544d80-fa21-11e8-9f2c-80b1d582b21c.png)
+
+## Screen lock
+
+Since M71, the [WakeLock API](https://www.w3.org/TR/wake-lock/) has been enabled for testing purposes (see the current status on [Chrome Platform Status](https://www.chromestatus.com/feature/4636879949398016)). This ideally allows us to keep the screen from going into power saving mode and generally an off state. I've enabled this (you'll need M71 Chrome for Android) for testing.
 
 ## Dev
 

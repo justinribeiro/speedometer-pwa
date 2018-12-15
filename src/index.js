@@ -51,6 +51,8 @@ document.querySelector('#start').addEventListener('click', (event) => {
     };
     appOpts.watchId = navigator.geolocation.watchPosition(parsePosition,
       null, options);
+    startWakeLock();
+
     appOpts.dom.start.textContent = '🛑 Stop';
     appOpts.dom.start.classList.toggle('selected');
   }
