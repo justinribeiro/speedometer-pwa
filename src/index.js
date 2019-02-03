@@ -22,16 +22,12 @@ const appOpts = {
 
 document.querySelector('#show-mph').addEventListener('click', (event) => {
   appOpts.readoutUnit = readoutUnits.mph;
-  if (!appOpts.dom.showMph.classList.contains('selected')) {
-    toggleReadoutButtons();
-  }
+  updateReadoutButtons();
 });
 
 document.querySelector('#show-kmh').addEventListener('click', (event) => {
   appOpts.readoutUnit = readoutUnits.kmh;
-  if (!appOpts.dom.showKmh.classList.contains('selected')) {
-    toggleReadoutButtons();
-  }
+  updateReadoutButtons();
 });
 
 document.querySelector('#start').addEventListener('click', (event) => {
@@ -43,8 +39,6 @@ document.querySelector('#start').addEventListener('click', (event) => {
     }
 
     appOpts.watchId = null;
-    appOpts.dom.start.textContent = '🔑 Start';
-    appOpts.dom.start.classList.toggle('selected');
   } else {
     const options = {
       enableHighAccuracy: true
@@ -52,15 +46,19 @@ document.querySelector('#start').addEventListener('click', (event) => {
     appOpts.watchId = navigator.geolocation.watchPosition(parsePosition,
       null, options);
     startWakeLock();
-
-    appOpts.dom.start.textContent = '🛑 Stop';
-    appOpts.dom.start.classList.toggle('selected');
   }
+  updateStartButton();
 });
 
-const toggleReadoutButtons = () => {
-  appOpts.dom.showKmh.classList.toggle('selected');
-  appOpts.dom.showMph.classList.toggle('selected');
+const updateStartButton = () => {
+  appOpts.dom.start.classList.toggle('selected', !!appOpts.watchId);
+  appOpts.dom.start.textContent = (appOpts.watchId ? '🛑 Stop' : '🔑 Start');
+};
+
+const updateReadoutButtons = () => {
+  const isMph = (appOpts.readoutUnit == readoutUnits.mph);
+  appOpts.dom.showKmh.classList.toggle('selected', !isMph);
+  appOpts.dom.showMph.classList.toggle('selected', isMph);
 };
 
 const startAmbientSensor = () => {
@@ -72,11 +70,7 @@ const startAmbientSensor = () => {
         }
         const sensor = new AmbientLightSensor({frequency: 0.25});
         sensor.addEventListener('reading', () => {
-          if (sensor['illuminance'] < 3 && !appOpts.dom.body.classList.contains('dark')) {
-            appOpts.dom.body.classList.toggle('dark');
-          } else if (sensor['illuminance'] > 3 && appOpts.dom.body.classList.contains('dark')) {
-            appOpts.dom.body.classList.toggle('dark');
-          };
+          appOpts.dom.body.classList.toggle('dark', (sensor.illuminance < 3));
         });
         sensor.start();
     });
@@ -105,4 +99,6 @@ const startServiceWorker = () => {
 }
 
 startAmbientSensor();
+updateReadoutButtons();
+updateStartButton();
 startServiceWorker();
