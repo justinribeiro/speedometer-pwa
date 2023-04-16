@@ -6,6 +6,13 @@ const readoutUnits = {
   kmh: 3.6
 };
 
+let n = 8
+let v = position.coords.speed
+let a = 34.82
+let b = 4.01
+let cw = a / (1-(Math.pow(position.coords.speed/b),2))
+let p = Math.pow(v,3) * cw / n
+
 /** @const */
 const appOpts = {
   dom: {
@@ -48,7 +55,7 @@ document.querySelector('#start').addEventListener('click', (event) => {
   } else {
     const options = {
       enableHighAccuracy: true
-    };
+    }; 
     appOpts.watchId = navigator.geolocation.watchPosition(parsePosition,
       null, options);
     startWakeLock();
@@ -95,7 +102,8 @@ const startWakeLock = () => {
 
 const parsePosition = (position) => {
   appOpts.dom.readout.textContent = Math.round(
-    position.coords.speed * appOpts.readoutUnit);
+//    position.coords.speed * appOpts.readoutUnit);
+    p );
 };
 
 const startServiceWorker = () => {
