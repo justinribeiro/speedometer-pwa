@@ -7,11 +7,10 @@ const readoutUnits = {
 };
 
 let n = 8
-let v = position.coords.speed
 let a = 34.82
 let b = 4.01
-let cw = a / (1-(Math.pow(position.coords.speed/b),2))
-let p = Math.pow(v,3) * cw / n
+
+
 
 /** @const */
 const appOpts = {
@@ -102,9 +101,12 @@ const startWakeLock = () => {
 
 const parsePosition = (position) => {
   appOpts.dom.readout.textContent = Math.round(
-//    position.coords.speed * appOpts.readoutUnit);
-    p );
+    Math.pow(position.coords.speed,3) * (a / (1-(Math.pow(position.coords.speed/b),2))) / n);
 };
+
+//let v = position.coords.speed
+//let cw = (a / (1-(Math.pow(position.coords.speed/b),2)))
+//let p = Math.pow(v,3) * (a / (1-(Math.pow(position.coords.speed/b),2))) / n
 
 const startServiceWorker = () => {
   navigator.serviceWorker.register('service-worker.js', {
