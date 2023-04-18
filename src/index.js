@@ -2,7 +2,7 @@
 
 /** @enum {number} */
 const readoutUnits = {
-  mph: 2.23694,
+  mps: 1,
   kmh: 3.6
 };
 
@@ -18,17 +18,17 @@ const appOpts = {
     body: document.querySelector('body'),
     start: document.querySelector('#start'),
     readout: document.querySelector('#readout'),
-    showMph: document.querySelector('#show-mph'),
+    showMps: document.querySelector('#show-mps'),
     showKmh: document.querySelector('#show-kmh'),
   },
-  readoutUnit: readoutUnits.mph,
+  readoutUnit: readoutUnits.mps,
   watchId: null,
   wakeLock: null
 };
 
-document.querySelector('#show-mph').addEventListener('click', (event) => {
-  appOpts.readoutUnit = readoutUnits.mph;
-  if (!appOpts.dom.showMph.classList.contains('selected')) {
+document.querySelector('#show-mps').addEventListener('click', (event) => {
+  appOpts.readoutUnit = readoutUnits.mps;
+  if (!appOpts.dom.showMps.classList.contains('selected')) {
     toggleReadoutButtons();
   }
 });
@@ -66,7 +66,7 @@ document.querySelector('#start').addEventListener('click', (event) => {
 
 const toggleReadoutButtons = () => {
   appOpts.dom.showKmh.classList.toggle('selected');
-  appOpts.dom.showMph.classList.toggle('selected');
+  appOpts.dom.showMps.classList.toggle('selected');
 };
 
 const startAmbientSensor = () => {
@@ -100,13 +100,9 @@ const startWakeLock = () => {
 }
 
 const parsePosition = (position) => {
-  appOpts.dom.readout.textContent = Math.round(
-    Math.pow(position.coords.speed,3) * (a / (1-(Math.pow(position.coords.speed/b),2))) / n);
+  appOpts.dom.readout.textContent = (Math.pow(
+    position.coords.speed * appOpts.readoutUnit),2);
 };
-
-//let v = position.coords.speed
-//let cw = (a / (1-(Math.pow(position.coords.speed/b),2)))
-//let p = Math.pow(v,3) * (a / (1-(Math.pow(position.coords.speed/b),2))) / n
 
 const startServiceWorker = () => {
   navigator.serviceWorker.register('service-worker.js', {
