@@ -2,27 +2,36 @@
 
 /** @enum {number} */
 const readoutUnits = {
-  mph: 2.23694,
+  mps: 1,
   kmh: 3.6
 };
 
+<<<<<<< HEAD
+let n = 8
+let a = 34.82
+let b = 4.01
+
+
+
+=======
+>>>>>>> parent of 77a9130 (Probeersel CW Waarde Anckertje)
 /** @const */
 const appOpts = {
   dom: {
     body: document.querySelector('body'),
     start: document.querySelector('#start'),
     readout: document.querySelector('#readout'),
-    showMph: document.querySelector('#show-mph'),
+    showMps: document.querySelector('#show-mps'),
     showKmh: document.querySelector('#show-kmh'),
   },
-  readoutUnit: readoutUnits.mph,
+  readoutUnit: readoutUnits.mps,
   watchId: null,
   wakeLock: null
 };
 
-document.querySelector('#show-mph').addEventListener('click', (event) => {
-  appOpts.readoutUnit = readoutUnits.mph;
-  if (!appOpts.dom.showMph.classList.contains('selected')) {
+document.querySelector('#show-mps').addEventListener('click', (event) => {
+  appOpts.readoutUnit = readoutUnits.mps;
+  if (!appOpts.dom.showMps.classList.contains('selected')) {
     toggleReadoutButtons();
   }
 });
@@ -60,7 +69,7 @@ document.querySelector('#start').addEventListener('click', (event) => {
 
 const toggleReadoutButtons = () => {
   appOpts.dom.showKmh.classList.toggle('selected');
-  appOpts.dom.showMph.classList.toggle('selected');
+  appOpts.dom.showMps.classList.toggle('selected');
 };
 
 const startAmbientSensor = () => {
@@ -94,8 +103,13 @@ const startWakeLock = () => {
 }
 
 const parsePosition = (position) => {
+<<<<<<< HEAD
+  appOpts.dom.readout.textContent = (Math.pow(
+    position.coords.speed * appOpts.readoutUnit),2);
+=======
   appOpts.dom.readout.textContent = Math.round(
     position.coords.speed * appOpts.readoutUnit);
+>>>>>>> parent of 77a9130 (Probeersel CW Waarde Anckertje)
 };
 
 const startServiceWorker = () => {
