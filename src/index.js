@@ -2,42 +2,27 @@
 
 /** @enum {number} */
 const readoutUnits = {
-  mps: 1,
+  mph: 2.23694,
   kmh: 3.6
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 222a70ad7c600c0421488ac83f5c5a3435645193
-let n = 8
-let a = 34.82
-let b = 4.01
-
-
-
-<<<<<<< HEAD
-=======
->>>>>>> parent of 77a9130 (Probeersel CW Waarde Anckertje)
-=======
->>>>>>> 222a70ad7c600c0421488ac83f5c5a3435645193
 /** @const */
 const appOpts = {
   dom: {
     body: document.querySelector('body'),
     start: document.querySelector('#start'),
     readout: document.querySelector('#readout'),
-    showMps: document.querySelector('#show-mps'),
+    showMph: document.querySelector('#show-mph'),
     showKmh: document.querySelector('#show-kmh'),
   },
-  readoutUnit: readoutUnits.mps,
+  readoutUnit: readoutUnits.mph,
   watchId: null,
   wakeLock: null
 };
 
-document.querySelector('#show-mps').addEventListener('click', (event) => {
-  appOpts.readoutUnit = readoutUnits.mps;
-  if (!appOpts.dom.showMps.classList.contains('selected')) {
+document.querySelector('#show-mph').addEventListener('click', (event) => {
+  appOpts.readoutUnit = readoutUnits.mph;
+  if (!appOpts.dom.showMph.classList.contains('selected')) {
     toggleReadoutButtons();
   }
 });
@@ -63,7 +48,7 @@ document.querySelector('#start').addEventListener('click', (event) => {
   } else {
     const options = {
       enableHighAccuracy: true
-    }; 
+    };
     appOpts.watchId = navigator.geolocation.watchPosition(parsePosition,
       null, options);
     startWakeLock();
@@ -75,7 +60,7 @@ document.querySelector('#start').addEventListener('click', (event) => {
 
 const toggleReadoutButtons = () => {
   appOpts.dom.showKmh.classList.toggle('selected');
-  appOpts.dom.showMps.classList.toggle('selected');
+  appOpts.dom.showMph.classList.toggle('selected');
 };
 
 const startAmbientSensor = () => {
@@ -109,18 +94,8 @@ const startWakeLock = () => {
 }
 
 const parsePosition = (position) => {
-<<<<<<< HEAD
-<<<<<<< HEAD
-  appOpts.dom.readout.textContent = (Math.pow(
-    position.coords.speed * appOpts.readoutUnit),2);
-=======
   appOpts.dom.readout.textContent = Math.round(
     position.coords.speed * appOpts.readoutUnit);
->>>>>>> parent of 77a9130 (Probeersel CW Waarde Anckertje)
-=======
-  appOpts.dom.readout.textContent = (Math.pow(
-    position.coords.speed * appOpts.readoutUnit),2);
->>>>>>> 222a70ad7c600c0421488ac83f5c5a3435645193
 };
 
 const startServiceWorker = () => {
