@@ -1,3 +1,5 @@
+# Site Frank R: https://red-ground-0d7d92503.3.azurestaticapps.net/
+
 # speedometer-pwa
 A tiny no-frills speedometer progressive web app based on Geolocation API, AmbientLightSensor API, and WakeLock API.
 
