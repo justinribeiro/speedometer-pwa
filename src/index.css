@@ -22,6 +22,12 @@ body > div {
   line-height: 12rem;
 }
 
+#watt {
+  font-size: 12rem;
+  font-family: sans-serif;
+  line-height: 12rem;
+}
+
 button {
   padding: 1rem 2rem;
   border-radius: 10px;
@@ -35,7 +41,7 @@ button:focus {
   outline: none;
 }
 
-#show-mph {
+#show-mps {
   border-radius: 10px 0px 0 10px;
   margin-right: -6px;
 }
