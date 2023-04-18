@@ -94,8 +94,8 @@ const startWakeLock = () => {
 }
 
 const parsePosition = (position) => {
-  appOpts.dom.readout.textContent = Math.round(
-    position.coords.speed * appOpts.readoutUnit);
+  appOpts.dom.readout.textContent = 
+  (position.coords.speed * appOpts.readoutUnit).toFixed(2);
 };
 
 const startServiceWorker = () => {
