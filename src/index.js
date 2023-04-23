@@ -6,10 +6,6 @@ const readoutUnits = {
   kmh: 3.6,
 };
 
-let n = 8;
-let a = 34.82;
-let b = 4.01;
-
 /** @const */
 const appOpts = {
   dom: {
@@ -112,14 +108,13 @@ const parsePosition = (position) => {
   appOpts.dom.readout.textContent = (
     position.coords.speed * appOpts.readoutUnit
   ).toFixed(2);
-  appOpts.dom.watt.textContent = (1 + 1);
+  n = 8;
+  a = 34.82;
+  b = 4.01;
+  v = position.coords.speed;
+  cw = a / (1 - Math.pow(v / b), 2);
+  appOpts.dom.watt.textContent = (cw).toFixed(2);
 };
-
-// const calculateCw = (position) => {
-//  v = position.coords.speed;
-//  cw = a / (1 - Math.pow(v / b), 2);
-//  appOpts.dom.watt.textContent = (cw);
-// };
 
 const startServiceWorker = () => {
   navigator.serviceWorker.register("service-worker.js", {
