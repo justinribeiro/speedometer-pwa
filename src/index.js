@@ -113,7 +113,7 @@ const parsePosition = (position) => {
   let b = 4.01;
   let v = (position.coords.speed);
   let cw = (a / (1 - Math.pow(v / b), 2));
-  appOpts.dom.watt.textContent = ((Math.pow(v,3) * cw / n).toFixed(2));
+  appOpts.dom.watt.textContent = ((Math.pow(v,3) * cw / n).toFixed(1));
 };
 
 const startServiceWorker = () => {
