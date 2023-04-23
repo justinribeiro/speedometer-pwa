@@ -108,13 +108,12 @@ const parsePosition = (position) => {
   appOpts.dom.readout.textContent = (
     position.coords.speed * appOpts.readoutUnit
   ).toFixed(2);
-  n = 8;
-  a = 34.82;
-  b = 4.01;
-  v = (position.coords.speed);
-  cw = (a / (1 - Math.pow(v / b), 2));
-  power = ((Math.pow(v,3) * cw / n).toFixed(2));
-  appOpts.dom.watt.textContent = (power);
+  let n = 8;
+  let a = 34.82;
+  let b = 4.01;
+  let v = (position.coords.speed);
+  let cw = (a / (1 - Math.pow(v / b), 2));
+  appOpts.dom.watt.textContent = ((Math.pow(v,3) * cw / n).toFixed(2));
 };
 
 const startServiceWorker = () => {
