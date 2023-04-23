@@ -113,7 +113,7 @@ const parsePosition = (position) => {
   b = 4.01;
   v = (position.coords.speed);
   cw = (a / (1 - Math.pow(v / b), 2));
-  power = ((Math.pow(speed,3) * cw / n).toFixed(2));
+  power = ((Math.pow(v,3) * cw / n).toFixed(2));
   appOpts.dom.watt.textContent = (power);
 };
 
