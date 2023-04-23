@@ -112,9 +112,7 @@ const parsePosition = (position) => {
   appOpts.dom.readout.textContent = (
     position.coords.speed * appOpts.readoutUnit
   ).toFixed(2);
-  calculateCw (position);
-  cw = (calculateCw);
-  appOpts.dom.watt.textContent = (cw);
+  appOpts.dom.watt.textContent = (1 + 1);
 };
 
 // const calculateCw = (position) => {
