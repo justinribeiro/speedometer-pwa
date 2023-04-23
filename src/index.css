@@ -1,5 +1,5 @@
 body {
-  background: radial-gradient(ellipse at center, #ffffff 0%,#d3d3d3 100%);
+  background: radial-gradient(ellipse at center, #ffffff 0%, #d3d3d3 100%);
   overflow: hidden;
 }
 
@@ -11,9 +11,18 @@ body {
   flex-direction: column;
 }
 
-body > div {
+body>div {
   width: 100%;
   text-align: center;
+}
+
+header {
+  color: black;
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 3rem;
+  margin: 0;
+  word-break: break-word
 }
 
 #readout {
