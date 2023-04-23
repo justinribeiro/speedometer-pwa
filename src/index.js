@@ -113,13 +113,15 @@ const parsePosition = (position) => {
     position.coords.speed * appOpts.readoutUnit
   ).toFixed(2);
   calculateCw (position);
-};
-
-const calculateCw = (position) => {
-  v = position.coords.speed;
-  cw = a / (1 - Math.pow(v / b), 2);
+  cw = (calculateCw);
   appOpts.dom.watt.textContent = (cw);
 };
+
+// const calculateCw = (position) => {
+//  v = position.coords.speed;
+//  cw = a / (1 - Math.pow(v / b), 2);
+//  appOpts.dom.watt.textContent = (cw);
+// };
 
 const startServiceWorker = () => {
   navigator.serviceWorker.register("service-worker.js", {
