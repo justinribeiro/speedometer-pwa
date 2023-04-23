@@ -18,11 +18,9 @@ body>div {
 
 header {
   color: black;
-  font-size: 12rem;
-  font-weight: 700;
-  line-height: 12rem;
-  margin: 0;
-  word-break: break-word
+  font-size: 2rem;
+  line-height: 2rem;
+  font-family: sans-serif;
 }
 
 #readout {
