@@ -15,10 +15,16 @@ const appOpts = {
     watt: document.querySelector("#watt"),
     showMps: document.querySelector("#show-mps"),
     showKmh: document.querySelector("#show-kmh"),
+    n: document.querySelector("#n"),
+    a: document.querySelector("#a"),
+    b: document.querySelector("#b"),
   },
   readoutUnit: readoutUnits.mps,
   watchId: null,
   wakeLock: null,
+  n: 8,
+  a: 34.82,
+  b: 4.01,
 };
 
 document.querySelector("#show-mps").addEventListener("click", (event) => {
@@ -108,11 +114,15 @@ const parsePosition = (position) => {
   appOpts.dom.readout.textContent = (
     position.coords.speed * appOpts.readoutUnit
   ).toFixed(2);
-  let n = 8;
-  let a = 34.82;
-  let b = 4.01;
-  let v = (position.coords.speed);
-  let cw = (a / (1 - Math.pow(v / b), 2));
+  
+  // Retrieve values of n, a, and b from input boxes
+  const n = document.getElementById("n-input").value;
+  const a = document.getElementById("a-input").value;
+  const b = document.getElementById("b-input").value;
+  
+  // Use the retrieved values in your calculations
+  const v = position.coords.speed;
+  const cw = (a / (1 - Math.pow(v / b), 2));
   appOpts.dom.watt.textContent = ((Math.pow(v,3) * cw / n).toFixed(1));
 };
 
