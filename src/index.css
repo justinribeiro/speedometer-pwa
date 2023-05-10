@@ -29,7 +29,7 @@ body>div {
 }
 
 #watt {
-  font-size: 5rem;
+  font-size: 7rem; /* increase font size */
   margin-right: 1rem;
 }
 
@@ -38,9 +38,9 @@ body>div {
 }
 
 #readout {
-  font-size: 8rem;
+  font-size: 5rem; /* decrease font size */
   font-family: sans-serif;
-  line-height: 8rem;
+  line-height: 5rem; /* decrease line-height */
 }
 
 #readoutUnits {
