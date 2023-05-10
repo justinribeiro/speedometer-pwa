@@ -23,16 +23,20 @@ body>div {
   font-family: sans-serif;
 }
 
+#watt {
+  font-size: 8rem;
+  font-family: sans-serif;
+  line-height: 8rem;
+}
+
 #readout {
   font-size: 12rem;
   font-family: sans-serif;
   line-height: 12rem;
 }
 
-#watt {
-  font-size: 12rem;
-  font-family: sans-serif;
-  line-height: 12rem;
+#readoutUnits {
+  margin-top: 2rem;
 }
 
 button {
