@@ -26,6 +26,7 @@ body>div {
 #watt-container {
   display: flex;
   align-items: center;
+  justify-content: center; /* add this line to center horizontally */
 }
 
 #watt {
