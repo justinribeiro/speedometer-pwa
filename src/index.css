@@ -23,10 +23,18 @@ body>div {
   font-family: sans-serif;
 }
 
+#watt-container {
+  display: flex;
+  align-items: center;
+}
+
 #watt {
-  font-size: 12rem;
-  font-family: sans-serif;
-  line-height: 12rem;
+  font-size: 5rem;
+  margin-right: 1rem;
+}
+
+#watt-unit {
+  font-size: 3rem;
 }
 
 #readout {

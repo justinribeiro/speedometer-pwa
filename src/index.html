@@ -10,16 +10,6 @@
   <link rel="icon" href="/images/speedometer.png">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="index.css">
-  <style>
-    html, body {
-      height: 100%;
-    }
-
-    body {
-      display: flex;
-      flex-direction: column;
-    }
-  </style>
 </head>
 
 <body>
@@ -38,7 +28,10 @@
       <input type="number" id="b-input" value="4.01">
     </div>
   </details>
-  <div id="watt">...</div><span style="font-size: 3rem;">W</span>
+  <div id="watt-container">
+    <div id="watt">...</div>
+    <div id="watt-unit">W</div>
+  </div>
   <div id="readout">...</div>
   <div id="readoutUnits">
     <button id="show-mps" class="selected">m/s</button>
