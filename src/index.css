@@ -24,15 +24,15 @@ body>div {
 }
 
 #watt {
-  font-size: 8rem;
-  font-family: sans-serif;
-  line-height: 8rem;
-}
-
-#readout {
   font-size: 12rem;
   font-family: sans-serif;
   line-height: 12rem;
+}
+
+#readout {
+  font-size: 8rem;
+  font-family: sans-serif;
+  line-height: 8rem;
 }
 
 #readoutUnits {

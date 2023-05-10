@@ -10,11 +10,21 @@
   <link rel="icon" href="/images/speedometer.png">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="index.css">
+  <style>
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
 </head>
 
 <body>
   <details>
-    <summary>Input</summary>
+    <summary>Input</summary><br>
     <div>
       <label for="n-input">n:</label>
       <input type="number" id="n-input" value="8">
