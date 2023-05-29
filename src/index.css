@@ -1,5 +1,5 @@
 body {
-  background: radial-gradient(ellipse at center, #ffffff 0%, #d3d3d3 100%);
+  background: radial-gradient(ellipse at center, #ffffff 0%,#d3d3d3 100%);
   overflow: hidden;
 }
 
@@ -11,41 +11,15 @@ body {
   flex-direction: column;
 }
 
-body>div {
+body > div {
   width: 100%;
   text-align: center;
 }
 
-.header {
-  color: black;
-  font-size: 4rem;
-  line-height: 4rem;
-  font-family: sans-serif;
-}
-
-#watt-container {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* add this line to center horizontally */
-}
-
-#watt {
-  font-size: 7rem; /* increase font size */
-  margin-right: 1rem;
-}
-
-#watt-unit {
-  font-size: 3rem;
-}
-
 #readout {
-  font-size: 5rem; /* decrease font size */
+  font-size: 12rem;
   font-family: sans-serif;
-  line-height: 5rem; /* decrease line-height */
-}
-
-#readoutUnits {
-  margin-top: 2rem;
+  line-height: 12rem;
 }
 
 button {
@@ -61,7 +35,7 @@ button:focus {
   outline: none;
 }
 
-#show-mps {
+#show-mph {
   border-radius: 10px 0px 0 10px;
   margin-right: -6px;
 }
