@@ -1,47 +1,42 @@
-"use strict";
+'use strict';
 
 /** @enum {number} */
 const readoutUnits = {
-  mps: 1,
-  kmh: 3.6,
+  mph: 2.23694,
+  kmh: 3.6
 };
 
 /** @const */
 const appOpts = {
   dom: {
-    body: document.querySelector("body"),
-    start: document.querySelector("#start"),
-    readout: document.querySelector("#readout"),
-    watt: document.querySelector("#watt"),
-    showMps: document.querySelector("#show-mps"),
-    showKmh: document.querySelector("#show-kmh"),
-    n: document.querySelector("#n"),
-    a: document.querySelector("#a"),
-    b: document.querySelector("#b"),
+    body: document.querySelector('body'),
+    start: document.querySelector('#start'),
+    readout: document.querySelector('#readout'),
+    history: document.querySelector('#history'),
+    showMph: document.querySelector('#show-mph'),
+    showKmh: document.querySelector('#show-kmh'),
   },
-  readoutUnit: readoutUnits.mps,
+  readoutUnit: readoutUnits.mph,
   watchId: null,
   wakeLock: null,
-  n: 8,
-  a: 34.82,
-  b: 4.01,
+  speedHistory: []
 };
 
-document.querySelector("#show-mps").addEventListener("click", (event) => {
-  appOpts.readoutUnit = readoutUnits.mps;
-  if (!appOpts.dom.showMps.classList.contains("selected")) {
+document.querySelector('#show-mph').addEventListener('click', (event) => {
+  appOpts.readoutUnit = readoutUnits.mph;
+  if (!appOpts.dom.showMph.classList.contains('selected')) {
     toggleReadoutButtons();
   }
 });
 
-document.querySelector("#show-kmh").addEventListener("click", (event) => {
+document.querySelector('#show-kmh').addEventListener('click', (event) => {
   appOpts.readoutUnit = readoutUnits.kmh;
-  if (!appOpts.dom.showKmh.classList.contains("selected")) {
+  if (!appOpts.dom.showKmh.classList.contains('selected')) {
     toggleReadoutButtons();
   }
 });
 
-document.querySelector("#start").addEventListener("click", (event) => {
+document.querySelector('#start').addEventListener('click', (event) => {
   if (appOpts.watchId) {
     navigator.geolocation.clearWatch(appOpts.watchId);
 
@@ -50,87 +45,93 @@ document.querySelector("#start").addEventListener("click", (event) => {
     }
 
     appOpts.watchId = null;
-    appOpts.dom.start.textContent = "🔑 Start";
-    appOpts.dom.start.classList.toggle("selected");
+    appOpts.dom.start.textContent = '🔑 Start';
+    appOpts.dom.start.classList.toggle('selected');
   } else {
     const options = {
-      enableHighAccuracy: true,
+      enableHighAccuracy: true
     };
-    appOpts.watchId = navigator.geolocation.watchPosition(
-      parsePosition,
-      null,
-      options
-    );
+    appOpts.watchId = navigator.geolocation.watchPosition(parsePosition,
+      null, options);
     startWakeLock();
 
-    appOpts.dom.start.textContent = "🛑 Stop";
-    appOpts.dom.start.classList.toggle("selected");
+    appOpts.dom.start.textContent = '🛑 Stop';
+    appOpts.dom.start.classList.toggle('selected');
   }
 });
 
 const toggleReadoutButtons = () => {
-  appOpts.dom.showKmh.classList.toggle("selected");
-  appOpts.dom.showMps.classList.toggle("selected");
+  appOpts.dom.showKmh.classList.toggle('selected');
+  appOpts.dom.showMph.classList.toggle('selected');
 };
 
 const startAmbientSensor = () => {
-  if ("AmbientLightSensor" in window) {
-    navigator.permissions
-      .query({ name: "ambient-light-sensor" })
-      .then((result) => {
-        if (result.state === "denied") {
+  if ('AmbientLightSensor' in window) {
+    navigator.permissions.query({ name: 'ambient-light-sensor' })
+      .then(result => {
+        if (result.state === 'denied') {
           return;
         }
-        const sensor = new AmbientLightSensor({ frequency: 0.25 });
-        sensor.addEventListener("reading", () => {
-          if (
-            sensor["illuminance"] < 3 &&
-            !appOpts.dom.body.classList.contains("dark")
-          ) {
-            appOpts.dom.body.classList.toggle("dark");
-          } else if (
-            sensor["illuminance"] > 3 &&
-            appOpts.dom.body.classList.contains("dark")
-          ) {
-            appOpts.dom.body.classList.toggle("dark");
-          }
+        const sensor = new AmbientLightSensor({frequency: 0.25});
+        sensor.addEventListener('reading', () => {
+          if (sensor['illuminance'] < 3 && !appOpts.dom.body.classList.contains('dark')) {
+            appOpts.dom.body.classList.toggle('dark');
+          } else if (sensor['illuminance'] > 3 && appOpts.dom.body.classList.contains('dark')) {
+            appOpts.dom.body.classList.toggle('dark');
+          };
         });
         sensor.start();
-      });
+    });
   }
-};
+}
 
 const startWakeLock = () => {
   try {
     navigator.getWakeLock("screen").then((wakeLock) => {
       appOpts.wakeLock = wakeLock.createRequest();
     });
-  } catch (error) {
+  } catch(error) {
     // no experimental wake lock api build
   }
+}
+
+const calculateP = (v) => {
+  const A = 34.82;
+  const B = 4.01;
+  const n = 8;
+
+  const Cw = A / (1 - Math.pow((v / B), 2));
+  const P = Math.pow(v, 3) * Cw / n;
+
+  return P;
 };
 
 const parsePosition = (position) => {
-  appOpts.dom.readout.textContent = (
-    position.coords.speed * appOpts.readoutUnit
-  ).toFixed(2);
-  
-  // Retrieve values of n, a, and b from input boxes
-  const n = document.getElementById("n-input").value;
-  const a = document.getElementById("a-input").value;
-  const b = document.getElementById("b-input").value;
-  
-  // Use the retrieved values in your calculations
-  const v = position.coords.speed;
-  const cw = (a / (1 - Math.pow(v / b), 2));
-  appOpts.dom.watt.textContent = ((Math.pow(v,3) * cw / n).toFixed(1));
+  const speed = Math.round(position.coords.speed);
+  const calculatedP = calculateP(speed);
+
+  appOpts.speedHistory.push(speed);
+  if (appOpts.speedHistory.length > 6) {
+    appOpts.speedHistory.shift();
+  }
+
+  const averageSpeed = calculateAverageSpeed(appOpts.speedHistory);
+
+  appOpts.dom.readout.textContent = Math.round(calculatedP);
+  appOpts.dom.history.textContent = appOpts.speedHistory.join(', ');
+};
+
+const calculateAverageSpeed = (speeds) => {
+  const sum = speeds.reduce((acc, val) => acc + val, 0);
+  const average = sum / speeds.length;
+  return average;
 };
 
 const startServiceWorker = () => {
-  navigator.serviceWorker.register("service-worker.js", {
-    scope: "./",
+  navigator.serviceWorker.register('service-worker.js', {
+    scope: './'
   });
-};
+}
 
 startAmbientSensor();
 startServiceWorker();
