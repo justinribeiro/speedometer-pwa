@@ -90,3 +90,11 @@ body.dark #start.selected {
   margin-top: 1rem;
   font-size: 1.2rem;
 }
+
+#show-mph::before {
+  content: "Watt";
+}
+
+#show-kmh::before {
+  content: "km / h";
+}
