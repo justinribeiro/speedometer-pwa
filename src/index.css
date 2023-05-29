@@ -85,3 +85,8 @@ body.dark #start.selected {
   color: #fff;
   border-color: hsl(15, 100%, 18%);
 }
+
+#history {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+}
