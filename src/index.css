@@ -35,7 +35,7 @@ button:focus {
   outline: none;
 }
 
-#show-mph {
+#show-mph, #show-watt {
   border-radius: 10px 0px 0 10px;
   margin-right: -6px;
 }
@@ -84,17 +84,4 @@ body.dark #start.selected {
   background-color: hsl(0, 100%, 18%);
   color: #fff;
   border-color: hsl(15, 100%, 18%);
-}
-
-#history {
-  margin-top: 1rem;
-  font-size: 1.2rem;
-}
-
-#show-mph::before {
-  content: "Watt";
-}
-
-#show-kmh::before {
-  content: "km / h";
 }

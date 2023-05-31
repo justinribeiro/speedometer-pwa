@@ -2,9 +2,14 @@
 
 /** @enum {number} */
 const readoutUnits = {
-  mph: 2.23694,
+  watt: 0,
   kmh: 3.6
 };
+
+// Opgeslagen waarden voor A, B en n.
+const A = 34.82;
+const B = 4.01;
+const n = 8;
 
 /** @const */
 const appOpts = {
@@ -22,9 +27,9 @@ const appOpts = {
   speedHistory: []
 };
 
-document.querySelector('#show-mph').addEventListener('click', (event) => {
-  appOpts.readoutUnit = readoutUnits.mph;
-  if (!appOpts.dom.showMph.classList.contains('selected')) {
+document.querySelector('#show-watt').addEventListener('click', (event) => {
+  appOpts.readoutUnit = readoutUnits.watt;
+  if (!appOpts.dom.showWatt.classList.contains('selected')) {
     toggleReadoutButtons();
   }
 });
@@ -107,18 +112,15 @@ const calculateP = (v) => {
 };
 
 const parsePosition = (position) => {
-  const speed = Math.round(position.coords.speed);
-  const calculatedP = calculateP(speed);
-
-  appOpts.speedHistory.push(speed);
-  if (appOpts.speedHistory.length > 6) {
-    appOpts.speedHistory.shift();
+  let output;
+  if (appOpts.readoutUnit === readoutUnits.watt) {
+    const v = position.coords.speed;
+    const Cw = A / (1 - (v / B)**2);
+    output = v**3 * Cw / n;
+  } else {
+    output = position.coords.speed * appOpts.readoutUnit;
   }
-
-  const averageSpeed = calculateAverageSpeed(appOpts.speedHistory);
-
-  appOpts.dom.readout.textContent = Math.round(calculatedP);
-  appOpts.dom.history.textContent = appOpts.speedHistory.join(', ');
+  appOpts.dom.readout.textContent = Math.round(output);
 };
 
 const calculateAverageSpeed = (speeds) => {
